@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pine.admin.modules.system.dao.SysRolePermissionDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.pine.admin.modules.system.entity.SysRolePermission" id="sysRolePermissionMap">
+        <result column="id" property="id"/>
+        <result column="sys_role_id" property="sysRoleId"/>
+        <result column="sys_permission_id" property="sysPermissionId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">id,sys_role_id,sys_permission_id</sql>
+    <!-- 根据Id查询-->
+    <select id="selectByPrimaryKey" resultMap="sysRolePermissionMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role_permission
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据Id删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sys_role_permission
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <!-- 插入数据-->
+    <insert id="insertSelective" parameterType="com.pine.admin.modules.system.entity.SysRolePermission"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into sys_role_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !=null">id,</if>
+            <if test="sysRoleId !=null">sys_role_id,</if>
+            <if test="sysPermissionId !=null">sys_permission_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id !=null">#{id},</if>
+            <if test="sysRoleId !=null">#{sysRoleId},</if>
+            <if test="sysPermissionId !=null">#{sysPermissionId},</if>
+        </trim>
+    </insert>
+
+    <!-- 更新数据-->
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.pine.admin.modules.system.entity.SysRolePermission">
+        update sys_role_permission
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="sysRoleId != null">sys_role_id = #{sysRoleId},</if>
+            <if test="sysPermissionId != null">sys_permission_id = #{sysPermissionId},</if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 分页查询-->
+    <select id="querySysRolePermissionsByPage" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysRolePermission">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role_permission
+        <where>
+            and del_flag = 'N'
+            <if test="record.id != null and !&quot;&quot;.equals(record.id)">and id = #{record.id}</if>
+            <if test="record.sysRoleId != null and !&quot;&quot;.equals(record.sysRoleId)">and sys_role_id =
+                #{record.sysRoleId}
+            </if>
+            <if test="record.sysPermissionId != null and !&quot;&quot;.equals(record.sysPermissionId)">and
+                sys_permission_id = #{record.sysPermissionId}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 全部查询 -->
+    <select id="queryAllSysRolePermission" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysRolePermission">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role_permission
+        <where>
+            and del_flag = 'N'
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="sysRoleId != null and !&quot;&quot;.equals(sysRoleId)">and sys_role_id = #{sysRoleId}</if>
+            <if test="sysPermissionId != null and !&quot;&quot;.equals(sysPermissionId)">and sys_permission_id =
+                #{sysPermissionId}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 根据条件查询一个 -->
+    <select id="querySysRolePermission" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysRolePermission">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role_permission
+        <where>
+            and del_flag = 'N'
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="sysRoleId != null and !&quot;&quot;.equals(sysRoleId)">and sys_role_id = #{sysRoleId}</if>
+            <if test="sysPermissionId != null and !&quot;&quot;.equals(sysPermissionId)">and sys_permission_id =
+                #{sysPermissionId}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据用户id查询菜单 -->
+    <select id="findMenuListByUserId" parameterType="java.lang.Integer"
+            resultType="com.pine.admin.modules.system.entity.SysRolePermission">
+		SELECT
+		*
+		FROM
+		sys_permission
+		WHERE TYPE = 'menu'
+		AND id IN
+		(SELECT
+		sys_permission_id
+		FROM
+		sys_role_permission
+		WHERE sys_role_id IN
+		(SELECT
+		sys_role_id
+		FROM
+		sys_user_role
+		WHERE sys_user_id = #{userid}))
+	</select>
+    <!-- 根据用户id查询URL -->
+    <select id="findPermissionListByUserId" parameterType="java.lang.Integer"
+            resultType="com.pine.admin.modules.system.entity.SysRolePermission">
+		SELECT
+		*
+		FROM
+		sys_permission
+		WHERE TYPE = 'permission'
+		AND id IN
+		(SELECT
+		sys_permission_id
+		FROM
+		sys_role_permission
+		WHERE sys_role_id IN
+		(SELECT
+		sys_role_id
+		FROM
+		sys_user_role
+		WHERE sys_user_id = #{usrId}))
+	</select>
+
+    <update id="delete">
+        UPDATE sys_role_permission SET del_flag = 'Y'
+        <where>
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="delRole">
+        DELETE FROM sys_role_permission
+        <where>
+            AND sys_role_id = #{sysRoleId}
+        </where>
+    </update>
+
+</mapper>

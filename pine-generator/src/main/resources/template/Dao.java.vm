@@ -1,0 +1,18 @@
+package ${package}.${moduleName}.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import ${package}.${moduleName}.entity.${className}Entity;
+import com.pine.admin.modules.base.binder.BaseDao;
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+public interface ${className}Dao extends BaseDao<${className}Entity> {
+    
+}

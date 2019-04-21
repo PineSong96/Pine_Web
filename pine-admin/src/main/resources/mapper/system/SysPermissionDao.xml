@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pine.admin.modules.system.dao.SysPermissionDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.pine.admin.modules.system.entity.SysPermission" id="sysPermissionMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="url" column="url"/>
+        <result property="percode" column="percode"/>
+        <result property="parentid" column="parentid"/>
+        <result property="parentids" column="parentids"/>
+        <result property="sortstring" column="sortstring"/>
+        <result property="available" column="available"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                 id,
+                     name,
+                     type,
+                     url,
+                     percode,
+                     parentid,
+                     parentids,
+                     sortstring,
+                     available,
+                     create_time,
+                    update_time         </sql>
+    <!-- 根据Id查询-->
+    <select id="selectByPrimaryKey" resultMap="sysPermissionMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_permission
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据Id删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sys_permission
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <!-- 插入数据-->
+    <insert id="insertSelective" parameterType="com.pine.admin.modules.system.entity.SysPermission"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into sys_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !=null">id,</if>
+            <if test="name !=null">name,</if>
+            <if test="type !=null">type,</if>
+            <if test="url !=null">url,</if>
+            <if test="percode !=null">percode,</if>
+            <if test="parentid !=null">parentid,</if>
+            <if test="parentids !=null">parentids,</if>
+            <if test="sortstring !=null">sortstring,</if>
+            <if test="available !=null">available,</if>
+            <if test="createTime !=null">create_time,</if>
+            <if test="updateTime !=null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id !=null">#{id},</if>
+            <if test="name !=null">#{name},</if>
+            <if test="type !=null">#{type},</if>
+            <if test="url !=null">#{url},</if>
+            <if test="percode !=null">#{percode},</if>
+            <if test="parentid !=null">#{parentid},</if>
+            <if test="parentids !=null">#{parentids},</if>
+            <if test="sortstring !=null">#{sortstring},</if>
+            <if test="available !=null">#{available},</if>
+            <if test="createTime !=null">#{createTime},</if>
+            <if test="updateTime !=null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <!-- 更新数据-->
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.pine.admin.modules.system.entity.SysPermission">
+        update sys_permission
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="percode != null">percode = #{percode},</if>
+            <if test="parentid != null">parentid = #{parentid},</if>
+            <if test="parentids != null">parentids = #{parentids},</if>
+            <if test="sortstring != null">sortstring = #{sortstring},</if>
+            <if test="available != null">available = #{available},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 分页查询-->
+    <select id="querySysPermissionsByPage" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysPermission">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_permission
+        <where>
+            and del_flag = 'N'
+            <if test="record.id != null and !&quot;&quot;.equals(record.id)">and id = #{record.id}</if>
+            <if test="record.name != null and !&quot;&quot;.equals(record.name)">and name = #{record.name}</if>
+            <if test="record.type != null and !&quot;&quot;.equals(record.type)">and type = #{record.type}</if>
+            <if test="record.url != null and !&quot;&quot;.equals(record.url)">and url = #{record.url}</if>
+            <if test="record.percode != null and !&quot;&quot;.equals(record.percode)">and percode = #{record.percode}
+            </if>
+            <if test="record.parentid != null and !&quot;&quot;.equals(record.parentid)">and parentid =
+                #{record.parentid}
+            </if>
+            <if test="record.parentids != null and !&quot;&quot;.equals(record.parentids)">and parentids =
+                #{record.parentids}
+            </if>
+            <if test="record.sortstring != null and !&quot;&quot;.equals(record.sortstring)">and sortstring =
+                #{record.sortstring}
+            </if>
+            <if test="record.available != null and !&quot;&quot;.equals(record.available)">and available =
+                #{record.available}
+            </if>
+            <if test="record.createTime != null and !&quot;&quot;.equals(record.createTime)">and create_time =
+                #{record.createTime}
+            </if>
+            <if test="record.updateTime != null and !&quot;&quot;.equals(record.updateTime)">and update_time =
+                #{record.updateTime}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 全部查询 -->
+    <select id="queryAllSysPermission" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysPermission">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_permission
+        <where>
+            and del_flag = 'N'
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="name != null and !&quot;&quot;.equals(name)">and name = #{name}</if>
+            <if test="type != null and !&quot;&quot;.equals(type)">and type = #{type}</if>
+            <if test="url != null and !&quot;&quot;.equals(url)">and url = #{url}</if>
+            <if test="percode != null and !&quot;&quot;.equals(percode)">and percode = #{percode}</if>
+            <if test="parentid != null and !&quot;&quot;.equals(parentid)">and parentid = #{parentid}</if>
+            <if test="parentids != null and !&quot;&quot;.equals(parentids)">and parentids = #{parentids}</if>
+            <if test="sortstring != null and !&quot;&quot;.equals(sortstring)">and sortstring = #{sortstring}</if>
+            <if test="available != null and !&quot;&quot;.equals(available)">and available = #{available}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
+            <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 根据条件查询一个 -->
+    <select id="querySysPermission" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysPermission">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_permission
+        <where>
+            and del_flag = 'N'
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="name != null and !&quot;&quot;.equals(name)">and name = #{name}</if>
+            <if test="type != null and !&quot;&quot;.equals(type)">and type = #{type}</if>
+            <if test="url != null and !&quot;&quot;.equals(url)">and url = #{url}</if>
+            <if test="percode != null and !&quot;&quot;.equals(percode)">and percode = #{percode}</if>
+            <if test="parentid != null and !&quot;&quot;.equals(parentid)">and parentid = #{parentid}</if>
+            <if test="parentids != null and !&quot;&quot;.equals(parentids)">and parentids = #{parentids}</if>
+            <if test="sortstring != null and !&quot;&quot;.equals(sortstring)">and sortstring = #{sortstring}</if>
+            <if test="available != null and !&quot;&quot;.equals(available)">and available = #{available}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
+            <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 根据用户id查询菜单 -->
+    <select id="findMenuListByUserId" parameterType="java.lang.Integer"
+            resultType="com.pine.admin.modules.system.entity.SysPermission">
+		SELECT
+		*
+		FROM
+		sys_permission
+		WHERE TYPE = 'menu'
+		AND id IN
+		(SELECT
+		sys_permission_id
+		FROM
+		sys_role_permission
+		WHERE
+		del_flag = 'N' AND
+		sys_role_id IN
+		(SELECT
+		sys_role_id
+		FROM
+		sys_user_role
+		WHERE sys_user_id = #{userId}))
+	</select>
+
+    <!-- 根据用户id查询URL -->
+    <select id="findPermissionListByUserId" parameterType="java.lang.Integer"
+            resultType="com.pine.admin.modules.system.entity.SysPermission">
+		SELECT
+		*
+		FROM
+		sys_permission
+		WHERE TYPE = 'permission'
+		AND id IN
+		(SELECT
+		sys_permission_id
+		FROM
+		sys_role_permission
+		WHERE
+		del_flag = 'N' AND
+		sys_role_id IN
+		(SELECT
+		sys_role_id
+		FROM
+		sys_user_role
+		WHERE sys_user_id = #{userId}))
+	</select>
+
+
+    <update id="delete">
+        UPDATE sys_permission SET del_flag = 'Y'
+        <where>
+            AND id = #{id}
+        </where>
+    </update>
+
+</mapper>

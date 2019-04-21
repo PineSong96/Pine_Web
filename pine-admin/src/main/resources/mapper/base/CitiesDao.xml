@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pine.admin.modules.base.dao.CitiesDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.pine.admin.modules.base.entity.Cities" id="citiesMap">
+        <result property="id" column="id"/>
+        <result property="cityid" column="cityid"/>
+        <result property="city" column="city"/>
+        <result property="provinceid" column="provinceid"/>
+    </resultMap>
+
+    <resultMap id="areas" type="com.pine.admin.modules.base.entity.Cities" extends="citiesMap">
+
+        <collection property="areas"
+                    ofType="com.pine.admin.modules.base.entity.Areas"
+                    select="com.pine.admin.modules.base.dao.AreasDao.queryAllAreas"
+                    column="{ cityid = cityid }"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+                 id,
+                     cityid,
+                     city,
+                    provinceid         </sql>
+    <!-- 根据Id查询-->
+    <select id="selectByPrimaryKey" resultMap="citiesMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cities
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据Id删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from cities
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <!-- 插入数据-->
+    <insert id="insertSelective" parameterType="com.pine.admin.modules.base.entity.Cities" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into cities
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="cityid != null">cityid,</if>
+            <if test="city != null">city,</if>
+            <if test="provinceid != null">provinceid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="cityid != null">#{cityid},</if>
+            <if test="city != null">#{city},</if>
+            <if test="provinceid != null">#{provinceid},</if>
+        </trim>
+    </insert>
+
+    <!-- 更新数据-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.pine.admin.modules.base.entity.Cities">
+        update cities
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="cityid != null">cityid = #{cityid},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="provinceid != null">provinceid = #{provinceid},</if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 分页查询-->
+    <select id="queryCitiessByPage" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.base.entity.Cities">
+        select
+        <include refid="Base_Column_List"/>
+        from cities
+        <where>
+            <if test="record.id != null and !&quot;&quot;.equals(record.id)">and id = #{record.id}</if>
+            <if test="record.cityid != null and !&quot;&quot;.equals(record.cityid)">and cityid = #{record.cityid}</if>
+            <if test="record.city != null and !&quot;&quot;.equals(record.city)">and city = #{record.city}</if>
+            <if test="record.provinceid != null and !&quot;&quot;.equals(record.provinceid)">and provinceid =
+                #{record.provinceid}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 全部查询 -->
+    <select id="queryAllCities" parameterType="java.util.Map" resultMap="areas">
+        select
+        <include refid="Base_Column_List"/>
+        from cities
+        <where>
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="cityid != null and !&quot;&quot;.equals(cityid)">and cityid = #{cityid}</if>
+            <if test="city != null and !&quot;&quot;.equals(city)">and city = #{city}</if>
+            <if test="provinceid != null and !&quot;&quot;.equals(provinceid)">and provinceid = #{provinceid}</if>
+        </where>
+        order by id asc
+    </select>
+
+    <!-- 根据条件查询一个 -->
+    <select id="queryCities" parameterType="java.util.Map" resultType="com.pine.admin.modules.base.entity.Cities">
+        select
+        <include refid="Base_Column_List"/>
+        from cities
+        <where>
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="cityid != null and !&quot;&quot;.equals(cityid)">and cityid = #{cityid}</if>
+            <if test="city != null and !&quot;&quot;.equals(city)">and city = #{city}</if>
+            <if test="provinceid != null and !&quot;&quot;.equals(provinceid)">and provinceid = #{provinceid}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <select id="queryCitiesName" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select city from cities
+        <where>
+            <if test="cityid != null and !&quot;&quot;.equals(cityid)">and cityid = #{cityid}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <delete id="delete">
+        DELETE from cities
+        <where>
+            AND id = #{id}
+        </where>
+    </delete>
+
+    <update id="deleteIds" parameterType="java.util.ArrayList">
+        UPDATE cities SET del_flag = 'Y'
+        WHERE id IN
+        <foreach item='ids' collection="array" index="index" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </update>
+
+</mapper>

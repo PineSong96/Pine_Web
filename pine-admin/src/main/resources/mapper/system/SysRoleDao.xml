@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pine.admin.modules.system.dao.SysRoleDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.pine.admin.modules.system.entity.SysRole" id="sysRoleMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="available" column="available"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                 id,
+                     name,
+                     available,
+                     del_flag,
+                     create_time,
+                    update_time         </sql>
+    <!-- 根据Id查询-->
+    <select id="selectByPrimaryKey" resultMap="sysRoleMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据Id删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sys_role
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <!-- 插入数据-->
+    <insert id="insertSelective" parameterType="com.pine.admin.modules.system.entity.SysRole"
+            useGeneratedKeys="true" keyProperty="id">
+
+        insert into sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="available != null">available,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="available != null">#{available},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+
+        </trim>
+
+    </insert>
+
+    <!-- 更新数据-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.pine.admin.modules.system.entity.SysRole">
+        update sys_role
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="available != null">available = #{available},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 分页查询-->
+    <select id="querySysRolesByPage" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysRole">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role
+        <where>
+            and del_flag = 'N'
+            <if test="record.id != null and !&quot;&quot;.equals(record.id)">and id = #{record.id}</if>
+            <if test="record.name != null and !&quot;&quot;.equals(record.name)">and name = #{record.name}</if>
+            <if test="record.available != null and !&quot;&quot;.equals(record.available)">and available =
+                #{record.available}
+            </if>
+            <if test="record.delFlag != null and !&quot;&quot;.equals(record.delFlag)">and del_flag =
+                #{record.delFlag}
+            </if>
+            <if test="record.createTime != null and !&quot;&quot;.equals(record.createTime)">and create_time =
+                #{record.createTime}
+            </if>
+            <if test="record.updateTime != null and !&quot;&quot;.equals(record.updateTime)">and update_time =
+                #{record.updateTime}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 全部查询 -->
+    <select id="queryAllSysRole" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysRole">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role
+        <where>
+            and del_flag = 'N'
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="name != null and !&quot;&quot;.equals(name)">and name = #{name}</if>
+            <if test="available != null and !&quot;&quot;.equals(available)">and available = #{available}</if>
+            <if test="delFlag != null and !&quot;&quot;.equals(delFlag)">and del_flag = #{delFlag}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
+            <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 根据条件查询一个 -->
+    <select id="querySysRole" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysRole">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role
+        <where>
+            and del_flag = 'N'
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="name != null and !&quot;&quot;.equals(name)">and name = #{name}</if>
+            <if test="available != null and !&quot;&quot;.equals(available)">and available = #{available}</if>
+            <if test="delFlag != null and !&quot;&quot;.equals(delFlag)">and del_flag = #{delFlag}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
+            <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <update id="delete">
+        UPDATE sys_role SET del_flag = 'Y'
+        <where>
+            AND id = #{id}
+        </where>
+    </update>
+
+</mapper>

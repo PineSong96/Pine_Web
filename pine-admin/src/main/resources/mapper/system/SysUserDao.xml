@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pine.admin.modules.system.dao.SysUserDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.pine.admin.modules.system.entity.SysUser" id="sysUserMap">
+        <result property="id" column="id"/>
+        <result property="usercode" column="usercode"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="locked" column="locked"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                 id,
+                     usercode,
+                     username,
+                     password,
+                     salt,
+                     locked,
+                     create_time,
+                    update_time         </sql>
+    <!-- 根据Id查询-->
+    <select id="selectByPrimaryKey" resultMap="sysUserMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据用户CODE查询查询-->
+    <select id="selectByUserCode" resultMap="sysUserMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where usercode = #{userCode,jdbcType=INTEGER} and del_flag = 'N'
+    </select>
+
+
+    <!-- 根据Id删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sys_user
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+
+    <!-- 插入数据-->
+    <insert id="insertSelective" parameterType="com.pine.admin.modules.system.entity.SysUser"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into sys_user
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !=null">id,</if>
+            <if test="usercode !=null">usercode,</if>
+            <if test="username !=null">username,</if>
+            <if test="password !=null">password,</if>
+            <if test="salt !=null">salt,</if>
+            <if test="locked !=null">locked,</if>
+            <if test="delFlag !=null">del_flag,</if>
+            <if test="createTime !=null">create_time,</if>
+            <if test="updateTime !=null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id !=null">#{id},</if>
+            <if test="usercode !=null">#{usercode},</if>
+            <if test="username !=null">#{username},</if>
+            <if test="password !=null">#{password},</if>
+            <if test="salt !=null">#{salt},</if>
+            <if test="locked !=null">#{locked},</if>
+            <if test="delFlag !=null">#{delFlag},</if>
+            <if test="createTime !=null">#{createTime},</if>
+            <if test="updateTime !=null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <!-- 更新数据-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.pine.admin.modules.system.entity.SysUser">
+        update sys_user
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="usercode != null">usercode = #{usercode},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="salt != null">salt = #{salt},</if>
+            <if test="locked != null">locked = #{locked},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 分页查询-->
+    <select id="querySysUsersByPage" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysUser">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        <where>
+            and del_flag = 'N'
+            <if test="record.id != null and !&quot;&quot;.equals(record.id)">and id = #{record.id}</if>
+            <if test="record.usercode != null and !&quot;&quot;.equals(record.usercode)">and usercode =
+                #{record.usercode}
+            </if>
+            <if test="record.username != null and !&quot;&quot;.equals(record.username)">and username =
+                #{record.username}
+            </if>
+            <if test="record.password != null and !&quot;&quot;.equals(record.password)">and password =
+                #{record.password}
+            </if>
+            <if test="record.salt != null and !&quot;&quot;.equals(record.salt)">and salt = #{record.salt}</if>
+            <if test="record.locked != null and !&quot;&quot;.equals(record.locked)">and locked = #{record.locked}</if>
+            <if test="record.delFlag != null and !&quot;&quot;.equals(record.delFlag)">and del_flag =
+                #{record.delFlag}
+            </if>
+            <if test="record.createTime != null and !&quot;&quot;.equals(record.createTime)">and create_time =
+                #{record.createTime}
+            </if>
+            <if test="record.updateTime != null and !&quot;&quot;.equals(record.updateTime)">and update_time =
+                #{record.updateTime}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 全部查询 -->
+    <select id="queryAllSysUser" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysUser">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        <where>
+            and del_flag = 'N'
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="usercode != null and !&quot;&quot;.equals(usercode)">and usercode = #{usercode}</if>
+            <if test="username != null and !&quot;&quot;.equals(username)">and username = #{username}</if>
+            <if test="password != null and !&quot;&quot;.equals(password)">and password = #{password}</if>
+            <if test="salt != null and !&quot;&quot;.equals(salt)">and salt = #{salt}</if>
+            <if test="locked != null and !&quot;&quot;.equals(locked)">and locked = #{locked}</if>
+            <if test="delFlag != null and !&quot;&quot;.equals(delFlag)">and del_flag = #{delFlag}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
+            <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 根据条件查询一个 -->
+    <select id="querySysUser" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.system.entity.SysUser">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        <where>
+            and del_flag = 'N'
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="usercode != null and !&quot;&quot;.equals(usercode)">and usercode = #{usercode}</if>
+            <if test="username != null and !&quot;&quot;.equals(username)">and username = #{username}</if>
+            <if test="password != null and !&quot;&quot;.equals(password)">and password = #{password}</if>
+            <if test="salt != null and !&quot;&quot;.equals(salt)">and salt = #{salt}</if>
+            <if test="locked != null and !&quot;&quot;.equals(locked)">and locked = #{locked}</if>
+            <if test="delFlag != null and !&quot;&quot;.equals(delFlag)">and del_flag = #{delFlag}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
+            <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <update id="delete">
+        UPDATE sys_user SET del_flag = 'Y'
+        <where>
+            AND id = #{id}
+        </where>
+    </update>
+
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${package}.${moduleName}.dao.${className}Dao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="${package}.${moduleName}.entity.${className}Entity" id="entityMap">
+        #foreach($column in $columns)
+            <result property="${column.attrname}" column="${column.columnName}"/>
+        #end
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        #foreach($column in $columns)
+        #if($!{velocityCount} ==$!{columns.size()})${column.columnName} #else ${column.columnName},
+        #end
+    #end
+    </sql>
+    <!-- 根据Id查询-->
+    <select id="selectByPrimaryKey" resultMap="entityMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ${tableName}
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据Id删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from ${tableName}
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <!-- 插入数据-->
+    <insert id="insertSelective" parameterType="${package}.${moduleName}.entity.${className}Entity"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into  ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #foreach($column in $columns)
+                <if test="${column.attrname} != null">  ${column.columnName},</if>
+            #end
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #foreach($column in $columns)
+                <if test="${column.attrname} != null">#{${column.attrname}},</if>
+            #end
+        </trim>
+    </insert>
+
+    <!-- 更新数据-->
+    <update id="updateByPrimaryKeySelective" parameterType="${package}.${moduleName}.entity.${className}Entity">
+        update ${tableName}
+        <set>
+            #foreach($column in $columns)
+                <if test="${column.attrname} != null">${column.columnName} = #{${column.attrname}},</if>
+            #end
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 分页查询-->
+    <select id="queryByPage" parameterType="java.util.Map"
+            resultMap="entityMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ${tableName}
+        <where>
+            and del_flag = 'N'
+            #foreach($column in $columns)
+                <if test="record.${column.attrname} != null and !&quot;&quot;.equals(record.${column.attrname})">
+                    and  ${column.columnName} = #{record.${column.attrname}}
+                </if>
+            #end
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 全部查询 -->
+    <select id="queryAll" parameterType="java.util.Map"
+            resultMap="entityMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ${tableName}
+        <where>
+            and del_flag = 'N'
+            #foreach($column in $columns)
+                <if test="${column.attrname} != null and !&quot;&quot;.equals(${column.attrname})">
+                    and  ${column.columnName} = #{${column.attrname}}
+                </if>
+            #end
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 根据条件查询一个 -->
+    <select id="queryOne" parameterType="java.util.Map"
+            resultMap="entityMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ${tableName}
+        <where>
+            and del_flag = 'N'
+            #foreach($column in $columns)
+                <if test="${column.attrname} != null and !&quot;&quot;.equals(${column.attrname})">
+                    and  ${column.columnName} = #{${column.attrname}}
+                </if>
+            #end
+        </where>
+        LIMIT 1
+    </select>
+
+    <update id="delete">
+        UPDATE ${tableName} SET del_flag = 'Y'
+        <where>
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="deleteIds" parameterType="java.util.ArrayList">
+        UPDATE  ${tableName} SET del_flag = 'Y'
+        WHERE id IN
+        <foreach item='ids' collection="array" index="index" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </update>
+
+</mapper>

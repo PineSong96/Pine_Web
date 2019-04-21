@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pine.admin.modules.base.dao.AreasDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.pine.admin.modules.base.entity.Areas" id="areasMap">
+        <result property="id" column="id"/>
+        <result property="areaid" column="areaid"/>
+        <result property="area" column="area"/>
+        <result property="cityid" column="cityid"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                 id,
+                     areaid,
+                     area,
+                    cityid         </sql>
+    <!-- 根据Id查询-->
+    <select id="selectByPrimaryKey" resultMap="areasMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from areas
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据Id删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from areas
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <!-- 插入数据-->
+    <insert id="insertSelective" parameterType="com.pine.admin.modules.base.entity.Areas" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into areas
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="areaid != null">areaid,</if>
+            <if test="area != null">area,</if>
+            <if test="cityid != null">cityid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="areaid != null">#{areaid},</if>
+            <if test="area != null">#{area},</if>
+            <if test="cityid != null">#{cityid},</if>
+        </trim>
+    </insert>
+
+    <!-- 更新数据-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.pine.admin.modules.base.entity.Areas">
+        update areas
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="areaid != null">areaid = #{areaid},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="cityid != null">cityid = #{cityid},</if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 分页查询-->
+    <select id="queryAreassByPage" parameterType="java.util.Map" resultType="com.pine.admin.modules.base.entity.Areas">
+        select
+        <include refid="Base_Column_List"/>
+        from areas
+        <where>
+            <if test="record.id != null and !&quot;&quot;.equals(record.id)">and id = #{record.id}</if>
+            <if test="record.areaid != null and !&quot;&quot;.equals(record.areaid)">and areaid = #{record.areaid}</if>
+            <if test="record.area != null and !&quot;&quot;.equals(record.area)">and area = #{record.area}</if>
+            <if test="record.cityid != null and !&quot;&quot;.equals(record.cityid)">and cityid = #{record.cityid}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 全部查询 -->
+    <select id="queryAllAreas" parameterType="java.util.Map" resultType="com.pine.admin.modules.base.entity.Areas">
+        select
+        <include refid="Base_Column_List"/>
+        from areas
+        <where>
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="areaid != null and !&quot;&quot;.equals(areaid)">and areaid = #{areaid}</if>
+            <if test="area != null and !&quot;&quot;.equals(area)">and area = #{area}</if>
+            <if test="cityid != null and !&quot;&quot;.equals(cityid)">and cityid = #{cityid}</if>
+        </where>
+        order by id asc
+    </select>
+
+    <!-- 根据条件查询一个 -->
+    <select id="queryAreas" parameterType="java.util.Map" resultType="com.pine.admin.modules.base.entity.Areas">
+        select
+        <include refid="Base_Column_List"/>
+        from areas
+        <where>
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="areaid != null and !&quot;&quot;.equals(areaid)">and areaid = #{areaid}</if>
+            <if test="area != null and !&quot;&quot;.equals(area)">and area = #{area}</if>
+            <if test="cityid != null and !&quot;&quot;.equals(cityid)">and cityid = #{cityid}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="queryAreasName" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select area from areas
+        <where>
+            <if test="areaid != null and !&quot;&quot;.equals(areaid)">and areaid = #{areaid}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <delete id="delete">
+        DELETE from areas
+        <where>
+            AND id = #{id}
+        </where>
+    </delete>
+
+    <update id="deleteIds" parameterType="java.util.ArrayList">
+        UPDATE areas SET del_flag = 'Y'
+        WHERE id IN
+        <foreach item='ids' collection="array" index="index" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </update>
+
+</mapper>

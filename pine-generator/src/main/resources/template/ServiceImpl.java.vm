@@ -1,0 +1,168 @@
+package ${package}.${moduleName}.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import lombok.extern.slf4j.Slf4j;
+import com.pine.common.dto.Page;
+import org.springframework.transaction.annotation.Transactional;
+
+import ${package}.${moduleName}.dao.${className}Dao;
+import ${package}.${moduleName}.entity.${className}Entity;
+import ${package}.${moduleName}.service.${className}Service;
+
+
+@Service("${classname}Service")
+@Slf4j
+public class ${className}ServiceImpl implements ${className}Service {
+
+    @Autowired
+    private ${className}Dao ${classname}Dao;
+
+
+    @Override
+    @Transactional
+    public List<${className}Entity> getAllList(${className}Entity record) {
+
+        log.info("get${className}List");
+        try {
+
+            return ${classname}Dao.queryAll(record);
+        } catch (Exception e) {
+            log.error("get${className}List", e);
+        }
+
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public List<${className}Entity> getByPage(Page page, ${className}Entity record) {
+
+        log.info("get${className}ByPage");
+        try {
+
+            Map<String, Object> parameter = new HashMap<String, Object>();
+            parameter.put("record", record);
+            parameter.put("page", page);
+
+            return ${classname}Dao.queryByPage(parameter);
+        } catch (Exception e) {
+            log.error("get${className}ByPage", e);
+        }
+
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public ${className}Entity getById(String id) {
+
+        log.info("get${className}ById");
+        try {
+
+            return ${classname}Dao.selectByPrimaryKey(Integer.valueOf(id));
+        } catch (Exception e) {
+            log.error("get${className}ById", e);
+        }
+
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public ${className}Entity getOne(${className}Entity record) {
+
+        log.info("get${className}");
+        try {
+
+            return ${classname}Dao.queryOne(record);
+        } catch (Exception e) {
+            log.error("get${className}", e);
+        }
+
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public boolean create(${className}Entity record) {
+
+        log.info("create${className}");
+        try {
+
+            int updates = ${classname}Dao.insertSelective(record);
+
+            if (updates > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            log.error("create${className}", e);
+        }
+
+        return false;
+    }
+
+    @Override
+    @Transactional
+    public boolean delete(String id) {
+
+        log.info("delete${className}");
+        try {
+
+            int updates = ${classname}Dao.delete(Integer.valueOf(id));
+
+            if (updates > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            log.error("delete${className}", e);
+        }
+
+        return false;
+    }
+
+    @Override
+    @Transactional
+    public boolean deltetByIds(String ids) {
+
+        log.info("deletee${className} byIDS");
+        try {
+
+            String[] id = ids.split(";");
+            int updates = ${classname}Dao.deleteAll(id);
+
+            if (id.length == updates) {
+                return true;
+            }
+        } catch (Exception e) {
+            log.error("deletee${className} byIDS", e);
+        }
+
+        return false;
+    }
+
+    @Override
+    @Transactional
+    public boolean update(${className}Entity record) {
+
+        log.info("update${className}");
+        try {
+
+            int updates = ${classname}Dao.updateByPrimaryKeySelective(record);
+
+            if (updates > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            log.error("update${className}", e);
+        }
+
+        return false;
+    }
+
+}

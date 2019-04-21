@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pine.admin.modules.business.dao.UserInfoDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.pine.admin.modules.business.entity.UserInfo" id="userInfoMap">
+        <result column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <!--<result column="backup_a" property="backupA"/>-->
+        <!--<result column="backup_b" property="backupB"/>-->
+        <!--<result column="backup_c" property="backupC"/>-->
+        <!--<result column="backup_d" property="backupD"/>-->
+        <!--<result column="backup_e" property="backupE"/>-->
+        <result column="user_name" property="userName"/>
+        <result column="user_phone" property="userPhone"/>
+        <result column="password" property="password"/>
+        <result column="id_card" property="idCard"/>
+        <result column="user_Icon" property="userIcon"/>
+        <result column="wx_openid" property="wxOpenid"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                 id,
+                     type,
+                     status,
+                     create_time,
+                     update_time,
+--                      del_flag,
+--                      backup_a,
+--                      backup_b,
+--                      backup_c,
+--                      backup_d,
+--                      backup_e,
+                     user_name,
+                     user_phone,
+                     password,
+                     id_card,
+                     user_Icon,
+                    wx_openid         </sql>
+    <!-- 根据Id查询-->
+    <select id="selectByPrimaryKey" resultMap="userInfoMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByOpenId" resultMap="userInfoMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        where wx_openid = #{wxOpenid}
+    </select>
+
+    <!-- 根据Id删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from user_info
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <!-- 插入数据-->
+    <insert id="insertSelective" parameterType="com.pine.admin.modules.business.entity.UserInfo" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="type != null">type,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="backupA != null">backup_a,</if>
+            <if test="backupB != null">backup_b,</if>
+            <if test="backupC != null">backup_c,</if>
+            <if test="backupD != null">backup_d,</if>
+            <if test="backupE != null">backup_e,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="userPhone != null">user_phone,</if>
+            <if test="password != null">password,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="userIcon != null">user_Icon,</if>
+            <if test="wxOpenid != null">wx_openid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="type != null">#{type},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="backupA != null">#{backupA},</if>
+            <if test="backupB != null">#{backupB},</if>
+            <if test="backupC != null">#{backupC},</if>
+            <if test="backupD != null">#{backupD},</if>
+            <if test="backupE != null">#{backupE},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="userPhone != null">#{userPhone},</if>
+            <if test="password != null">#{password},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="userIcon != null">#{userIcon},</if>
+            <if test="wxOpenid != null">#{wxOpenid},</if>
+        </trim>
+    </insert>
+
+    <!-- 更新数据-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.pine.admin.modules.business.entity.UserInfo">
+        update user_info
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="backupA != null">backup_a = #{backupA},</if>
+            <if test="backupB != null">backup_b = #{backupB},</if>
+            <if test="backupC != null">backup_c = #{backupC},</if>
+            <if test="backupD != null">backup_d = #{backupD},</if>
+            <if test="backupE != null">backup_e = #{backupE},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="userPhone != null">user_phone = #{userPhone},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="userIcon != null">user_Icon = #{userIcon},</if>
+            <if test="wxOpenid != null">wx_openid = #{wxOpenid},</if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 分页查询-->
+    <select id="queryByPage" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.business.entity.UserInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        <where>
+            and del_flag = 'N'
+            <if test="record.id != null and !&quot;&quot;.equals(record.id)">and id = #{record.id}</if>
+            <if test="record.type != null and !&quot;&quot;.equals(record.type)">and type = #{record.type}</if>
+            <if test="record.status != null and !&quot;&quot;.equals(record.status)">and status = #{record.status}</if>
+            <if test="record.createTime != null and !&quot;&quot;.equals(record.createTime)">and create_time =
+                #{record.createTime}
+            </if>
+            <if test="record.updateTime != null and !&quot;&quot;.equals(record.updateTime)">and update_time =
+                #{record.updateTime}
+            </if>
+            <if test="record.delFlag != null and !&quot;&quot;.equals(record.delFlag)">and del_flag =
+                #{record.delFlag}
+            </if>
+            <if test="record.backupA != null and !&quot;&quot;.equals(record.backupA)">and backup_a =
+                #{record.backupA}
+            </if>
+            <if test="record.backupB != null and !&quot;&quot;.equals(record.backupB)">and backup_b =
+                #{record.backupB}
+            </if>
+            <if test="record.backupC != null and !&quot;&quot;.equals(record.backupC)">and backup_c =
+                #{record.backupC}
+            </if>
+            <if test="record.backupD != null and !&quot;&quot;.equals(record.backupD)">and backup_d =
+                #{record.backupD}
+            </if>
+            <if test="record.backupE != null and !&quot;&quot;.equals(record.backupE)">and backup_e =
+                #{record.backupE}
+            </if>
+            <if test="record.userName != null and !&quot;&quot;.equals(record.userName)">and user_name =
+                #{record.userName}
+            </if>
+            <if test="record.userPhone != null and !&quot;&quot;.equals(record.userPhone)">and user_phone =
+                #{record.userPhone}
+            </if>
+            <if test="record.password != null and !&quot;&quot;.equals(record.password)">and password =
+                #{record.password}
+            </if>
+            <if test="record.idCard != null and !&quot;&quot;.equals(record.idCard)">and id_card = #{record.idCard}</if>
+            <if test="record.userIcon != null and !&quot;&quot;.equals(record.userIcon)">and user_Icon =
+                #{record.userIcon}
+            </if>
+            <if test="record.wxOpenid != null and !&quot;&quot;.equals(record.wxOpenid)">and wx_openid =
+                #{record.wxOpenid}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 全部查询 -->
+    <select id="queryAll" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.business.entity.UserInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        <where>
+            and del_flag = 'N'
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="type != null and !&quot;&quot;.equals(type)">and type = #{type}</if>
+            <if test="status != null and !&quot;&quot;.equals(status)">and status = #{status}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
+            <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
+            <if test="delFlag != null and !&quot;&quot;.equals(delFlag)">and del_flag = #{delFlag}</if>
+            <if test="backupA != null and !&quot;&quot;.equals(backupA)">and backup_a = #{backupA}</if>
+            <if test="backupB != null and !&quot;&quot;.equals(backupB)">and backup_b = #{backupB}</if>
+            <if test="backupC != null and !&quot;&quot;.equals(backupC)">and backup_c = #{backupC}</if>
+            <if test="backupD != null and !&quot;&quot;.equals(backupD)">and backup_d = #{backupD}</if>
+            <if test="backupE != null and !&quot;&quot;.equals(backupE)">and backup_e = #{backupE}</if>
+            <if test="userName != null and !&quot;&quot;.equals(userName)">and user_name = #{userName}</if>
+            <if test="userPhone != null and !&quot;&quot;.equals(userPhone)">and user_phone = #{userPhone}</if>
+            <if test="password != null and !&quot;&quot;.equals(password)">and password = #{password}</if>
+            <if test="idCard != null and !&quot;&quot;.equals(idCard)">and id_card = #{idCard}</if>
+            <if test="userIcon != null and !&quot;&quot;.equals(userIcon)">and user_Icon = #{userIcon}</if>
+            <if test="wxOpenid != null and !&quot;&quot;.equals(wxOpenid)">and wx_openid = #{wxOpenid}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <!-- 根据条件查询一个 -->
+    <select id="queryOne" parameterType="java.util.Map"
+            resultType="com.pine.admin.modules.business.entity.UserInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        <where>
+            and del_flag = 'N'
+            <if test="id != null and !&quot;&quot;.equals(id)">and id = #{id}</if>
+            <if test="type != null and !&quot;&quot;.equals(type)">and type = #{type}</if>
+            <if test="status != null and !&quot;&quot;.equals(status)">and status = #{status}</if>
+            <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
+            <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
+            <if test="delFlag != null and !&quot;&quot;.equals(delFlag)">and del_flag = #{delFlag}</if>
+            <if test="backupA != null and !&quot;&quot;.equals(backupA)">and backup_a = #{backupA}</if>
+            <if test="backupB != null and !&quot;&quot;.equals(backupB)">and backup_b = #{backupB}</if>
+            <if test="backupC != null and !&quot;&quot;.equals(backupC)">and backup_c = #{backupC}</if>
+            <if test="backupD != null and !&quot;&quot;.equals(backupD)">and backup_d = #{backupD}</if>
+            <if test="backupE != null and !&quot;&quot;.equals(backupE)">and backup_e = #{backupE}</if>
+            <if test="userName != null and !&quot;&quot;.equals(userName)">and user_name = #{userName}</if>
+            <if test="userPhone != null and !&quot;&quot;.equals(userPhone)">and user_phone = #{userPhone}</if>
+            <if test="password != null and !&quot;&quot;.equals(password)">and password = #{password}</if>
+            <if test="idCard != null and !&quot;&quot;.equals(idCard)">and id_card = #{idCard}</if>
+            <if test="userIcon != null and !&quot;&quot;.equals(userIcon)">and user_Icon = #{userIcon}</if>
+            <if test="wxOpenid != null and !&quot;&quot;.equals(wxOpenid)">and wx_openid = #{wxOpenid}</if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <update id="delete">
+        UPDATE user_info SET del_flag = 'Y'
+        <where>
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="deleteAll" parameterType="java.util.ArrayList">
+        UPDATE user_info SET del_flag = 'Y'
+        WHERE id IN
+        <foreach item='ids' collection="array" index="index" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </update>
+
+</mapper>

@@ -1,0 +1,16 @@
+package ${package}.${moduleName}.service;
+
+import ${package}.${moduleName}.entity.${className}Entity;
+import com.pine.admin.modules.base.binder.BaseService;
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+public interface ${className}Service extends BaseService<${className}Entity> {
+
+}
+

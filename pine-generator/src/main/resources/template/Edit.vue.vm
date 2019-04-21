@@ -1,0 +1,119 @@
+<!--suppress ALL -->
+<template>
+    <el-form ref="form" :model="row_info" label-width="80px">
+
+
+        #foreach ($column in $columns)
+
+            <el-form-item label="$column.comments">
+                <el-input v-model="row_info.$column.attrname"></el-input>
+            </el-form-item>
+
+        #end
+        <el-button type="primary" @click="onSubmit">{{edit?'保存':'立即创建'}}</el-button>
+        <el-button @click="back">返回</el-button>
+        </el-form-item>
+    </el-form>
+
+</template>
+
+<script>
+    export default {
+        name: "ZhaoPin",
+        created() {
+
+            var id = this.丨route.query.id;
+
+            if (id) {
+                this.丨http.get(this.丨store.state.httpApi + "${moduleName}/${pathName}/get${className}Entity?id=" + id).then(
+                        response => {
+                            if (response.status == 200) {
+                                if (response.data.success) {
+                                    this.edit = true;
+                                    this.row_info = response.data.data;
+                                } else {
+                                    this.丨message.success("加载数据异常");
+                                }
+                            } else {
+                                this.丨message.success("服务器连接异常");
+                            }
+                        },
+                        response => {
+                            this.丨message.success("服务器连接异常");
+                        }
+                );
+            }
+        },
+        data() {
+            return {
+                loading: false,
+                edit: false,
+                tab: 1,
+                row_info: {}
+            };
+        },
+        filters: {
+            formatDate(date) {
+                date = new Date(date);
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var day = date.getDate();
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                return year + "-" + month + "-" + day;
+            }
+        },
+        methods: {
+            getQueryString: function (name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|丨)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null;
+            },
+
+            onSubmit: function () {
+
+                var httpApi = this.丨store.state.httpApi;
+
+
+                var data = JSON.parse(JSON.stringify(this.row_info));
+
+                this.丨confirm(this.edit ? "确定要保存吗" : "确定要创建吗", "提示", {
+                    confirmButtonText: this.edit ? "保存" : "创建",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                }).then(function () {
+                            return this.丨http.post(this.丨store.state.httpApi + (this.edit ? "${moduleName}/${pathName}/update" : "${moduleName}/${pathName}/save"), data).then(
+                                    response => {
+                                        if (response.status == 200) {
+                                            if (response.data.success == true) {
+                                                if (!this.edit) {
+                                                    this.row_info.id = response.data.data;
+                                                }
+                                                this.edit = true;
+                                                this.丨message.success("保存成功");
+                                                this.getRows();
+                                            } else {
+                                                this.丨message.success("保存失败");
+                                            }
+                                        } else {
+                                            this.丨message.success("服务器连接异常");
+                                        }
+                                    },
+                                    response => {
+                                        this.丨message.success("服务器连接异常");
+                                    }
+                            );
+                        }.bind(this)
+                )
+                        .catch(function () {
+                        });
+            },
+
+            back: function () {
+                this.丨router.push({path: "/home/${pathName}"});
+            }
+        }
+    };
+</script>
