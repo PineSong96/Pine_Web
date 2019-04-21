@@ -14,7 +14,7 @@ SpringBoot 1.5.10.RELEASE
 - 	集成Shiro权限处理（集成Redis做缓存处理）
 - 	集成微信用户登录  微信支付
 - 	提供了代码生成器 
--       可以快速根据MySQL数据库表 快速批量生成Dao、Service、Controller以及Vue页面
+-  MySQL数据库表 快速批量生成Dao、Service、Controller以及Vue页面
 - 	生成后台管理页面的增删改查，只需要编写业务逻辑的代码，生成的代码。
 - 	生成的接口灵活可满足95%的基本的增删改查需求 
 - 	集成了swagger文档支持，方便编写API接口文档 代码生成文档自动生成
