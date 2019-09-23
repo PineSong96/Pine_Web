@@ -108,26 +108,6 @@ public class UserRealm extends AuthorizingRealm {
 //            return null;
             }
 
-            //单用户登录
-            //处理session
-            DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
-            DefaultWebSessionManager sessionManager = (DefaultWebSessionManager) securityManager.getSessionManager();
-            //获取当前已登录的用户session列表
-            Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
-            ShiroUserInfo temp;
-            for(Session session : sessions){
-                //清除该用户以前登录时保存的session，强制退出
-                Object attribute = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-                if (attribute == null) {
-                    continue;
-                }
-
-                temp = (ShiroUserInfo) ((SimplePrincipalCollection) attribute).getPrimaryPrincipal();
-                if(usernamePasswordToken.getUsername().equals(temp.getUserName())) {
-                    sessionManager.getSessionDAO().delete(session);
-                }
-            }
-
             //账号锁定
             if ("0".equals(user.getLocked())) {
                 throw new LockedAccountException("账号已被锁定,请联系管理员");

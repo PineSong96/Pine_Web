@@ -134,7 +134,7 @@ public class SysRolePermissionServiceImpl implements SysRolePermissionService {
         log.info("deleteSysRolePermission");
         try {
 
-            int updates = sysRolePermissionDao.delete(id);
+            int updates = sysRolePermissionDao.delete(Integer.valueOf(id));
 
             if (updates > 0) {
                 return true;
