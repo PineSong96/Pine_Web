@@ -8,6 +8,7 @@ import com.pine.admin.modules.system.entity.SysUser;
 import com.pine.admin.modules.system.service.SysService;
 import com.pine.admin.modules.system.service.SysUserService;
 import com.pine.admin.modules.base.binder.BaseController;
+import com.pine.admin.shiro.ShiroUtils;
 import com.pine.common.dto.Page;
 import com.pine.common.dto.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -37,12 +38,23 @@ public class SysUserController extends BaseController {
     /**
      * <p>获取全部记录。</p>
      */
-    @RequiresPermissions(value = "system::sysuser::all")
+    //@RequiresPermissions(value = "system::sysuser::all")
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Result all(SysUser record) {
 
         List<SysUser> pp = sysUserService.getSysUserList(record);
         return Result.success(true, pp);
+    }
+
+
+    @PostMapping(value = "/onlinePermission")
+    public Result onlinePermission() {
+        return Result.success(true, ShiroUtils.getShiroUserInfo().getMenus());
+    }
+
+    @PostMapping(value = "/onlineUser")
+    public Result onlineUser() {
+        return Result.success(true, ShiroUtils.getShiroUserInfo().nullMenus());
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -57,7 +69,7 @@ public class SysUserController extends BaseController {
     /**
      * <p>根据Id。</p>
      */
-    @RequiresPermissions(value = "system::sysuser::id")
+    //@RequiresPermissions(value = "system::sysuser::id")
     @RequestMapping(value = "/getSysUserEntity", method = RequestMethod.GET)
     public Result getSysUserEntity(@RequestParam(required = false, value = "id") String id) {
 
@@ -68,7 +80,7 @@ public class SysUserController extends BaseController {
     /**
      * <p>根据条件获取。</p>
      */
-    @RequiresPermissions(value = "system::sysuser::getone")
+    //@RequiresPermissions(value = "system::sysuser::getone")
     @RequestMapping(value = "/getOne", method = RequestMethod.GET)
     public Result getOne(SysUser record) {
 
@@ -79,7 +91,7 @@ public class SysUserController extends BaseController {
     /**
      * <p>分页查询。</p>
      */
-    @RequiresPermissions(value = "system::sysuser::page")
+    //@RequiresPermissions(value = "system::sysuser::page")
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public Result page(Page page, SysUser record) {
 
@@ -95,7 +107,7 @@ public class SysUserController extends BaseController {
     /**
      * <p>保存。</p>
      */
-    @RequiresPermissions(value = "system::sysuser::save")
+    //@RequiresPermissions(value = "system::sysuser::save")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public Result save(SysUser record) {
 
@@ -109,7 +121,7 @@ public class SysUserController extends BaseController {
     /**
      * <p>更新信息。</p>
      */
-    @RequiresPermissions(value = "system::sysuser::update")
+    //@RequiresPermissions(value = "system::sysuser::update")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Result updateSysUser(SysUser record) {
 
@@ -123,7 +135,7 @@ public class SysUserController extends BaseController {
     /**
      * <p>删除。</p>
      */
-    @RequiresPermissions(value = "system::sysuser::del")
+    //@RequiresPermissions(value = "system::sysuser::del")
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     public Result deleteSysUser(@RequestParam(required = true, value = "id") String id) {
 

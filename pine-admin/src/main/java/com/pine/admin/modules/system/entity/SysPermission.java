@@ -36,27 +36,23 @@ public class SysPermission implements Serializable {
     /**
      * 权限代码字符串
      */
-    private String percode;
+    private String perCode;
     /**
      * 父结点id
      */
-    private Integer parentid;
+    private Integer parentId;
     /**
      * 父结点id列表串
      */
-    private String parentids;
+    private String parentIds;
     /**
-     * 排序号
+     * 图标
      */
-    private String sortstring;
+    private String icon;
     /**
      * 是否可用,1：可用，0不可用
      */
     private String available;
-    /**
-     *
-     */
-    private String delFlag;
     /**
      *
      */
@@ -69,6 +65,7 @@ public class SysPermission implements Serializable {
     /**
      * 权限信息
      */
-    private List<SysPermission> sysPermissions;
+    private List<SysPermission> children;
+
 
 }

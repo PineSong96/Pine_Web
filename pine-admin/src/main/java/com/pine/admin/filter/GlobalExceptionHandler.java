@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Email:771190883@qq.com
  */
 @Slf4j
-//@RestControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
 

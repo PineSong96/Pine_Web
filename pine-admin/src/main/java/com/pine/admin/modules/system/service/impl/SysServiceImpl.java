@@ -6,6 +6,7 @@ import com.pine.admin.modules.system.entity.ActiveUser;
 import com.pine.admin.modules.system.entity.SysPermission;
 import com.pine.admin.modules.system.entity.SysUser;
 import com.pine.admin.modules.system.service.SysService;
+import com.pine.common.utils.Constant;
 import com.pine.common.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,7 @@ public class SysServiceImpl implements SysService {
 
     @Override
     public List<SysPermission> findMenuListByUserId(Integer userId) {
-        return sysPermissionMapper.findMenuListByUserId(userId);
+        return sysPermissionMapper.findMenuListByUserId(userId, Constant.PER_ID);
     }
 
     @Override

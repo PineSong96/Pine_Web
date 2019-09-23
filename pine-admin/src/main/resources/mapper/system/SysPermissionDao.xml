@@ -9,24 +9,33 @@
         <result property="name" column="name"/>
         <result property="type" column="type"/>
         <result property="url" column="url"/>
-        <result property="percode" column="percode"/>
-        <result property="parentid" column="parentid"/>
-        <result property="parentids" column="parentids"/>
-        <result property="sortstring" column="sortstring"/>
+        <result property="perCode" column="percode"/>
+        <result property="parentId" column="parentid"/>
+        <result property="parentIds" column="parentids"/>
+        <result property="icon" column="icon"/>
         <result property="available" column="available"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
+    <resultMap id="perList" type="com.pine.admin.modules.system.entity.SysPermission" extends="sysPermissionMap">
+
+        <collection property="children"
+                    ofType="com.pine.admin.modules.system.entity.SysPermission"
+                    select="com.pine.admin.modules.system.dao.SysPermissionDao.findMenuListByUserId"
+                    column="{userId = userId,parentId = id}"/>
+    </resultMap>
+
+
     <sql id="Base_Column_List">
-                 id,
+                       id,
                      name,
                      type,
                      url,
                      percode,
                      parentid,
                      parentids,
-                     sortstring,
+                     icon,
                      available,
                      create_time,
                     update_time         </sql>
@@ -56,7 +65,7 @@
             <if test="percode !=null">percode,</if>
             <if test="parentid !=null">parentid,</if>
             <if test="parentids !=null">parentids,</if>
-            <if test="sortstring !=null">sortstring,</if>
+            <if test="icon !=null">icon,</if>
             <if test="available !=null">available,</if>
             <if test="createTime !=null">create_time,</if>
             <if test="updateTime !=null">update_time,</if>
@@ -69,7 +78,7 @@
             <if test="percode !=null">#{percode},</if>
             <if test="parentid !=null">#{parentid},</if>
             <if test="parentids !=null">#{parentids},</if>
-            <if test="sortstring !=null">#{sortstring},</if>
+            <if test="icon !=null">#{icon},</if>
             <if test="available !=null">#{available},</if>
             <if test="createTime !=null">#{createTime},</if>
             <if test="updateTime !=null">#{updateTime},</if>
@@ -88,7 +97,7 @@
             <if test="percode != null">percode = #{percode},</if>
             <if test="parentid != null">parentid = #{parentid},</if>
             <if test="parentids != null">parentids = #{parentids},</if>
-            <if test="sortstring != null">sortstring = #{sortstring},</if>
+            <if test="icon != null">icon = #{icon},</if>
             <if test="available != null">available = #{available},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
@@ -116,8 +125,8 @@
             <if test="record.parentids != null and !&quot;&quot;.equals(record.parentids)">and parentids =
                 #{record.parentids}
             </if>
-            <if test="record.sortstring != null and !&quot;&quot;.equals(record.sortstring)">and sortstring =
-                #{record.sortstring}
+            <if test="record.icon != null and !&quot;&quot;.equals(record.icon)">and icon =
+                #{record.icon}
             </if>
             <if test="record.available != null and !&quot;&quot;.equals(record.available)">and available =
                 #{record.available}
@@ -147,7 +156,7 @@
             <if test="percode != null and !&quot;&quot;.equals(percode)">and percode = #{percode}</if>
             <if test="parentid != null and !&quot;&quot;.equals(parentid)">and parentid = #{parentid}</if>
             <if test="parentids != null and !&quot;&quot;.equals(parentids)">and parentids = #{parentids}</if>
-            <if test="sortstring != null and !&quot;&quot;.equals(sortstring)">and sortstring = #{sortstring}</if>
+            <if test="icon != null and !&quot;&quot;.equals(icon)">and icon = #{icon}</if>
             <if test="available != null and !&quot;&quot;.equals(available)">and available = #{available}</if>
             <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
             <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
@@ -170,7 +179,7 @@
             <if test="percode != null and !&quot;&quot;.equals(percode)">and percode = #{percode}</if>
             <if test="parentid != null and !&quot;&quot;.equals(parentid)">and parentid = #{parentid}</if>
             <if test="parentids != null and !&quot;&quot;.equals(parentids)">and parentids = #{parentids}</if>
-            <if test="sortstring != null and !&quot;&quot;.equals(sortstring)">and sortstring = #{sortstring}</if>
+            <if test="icon != null and !&quot;&quot;.equals(icon)">and icon = #{icon}</if>
             <if test="available != null and !&quot;&quot;.equals(available)">and available = #{available}</if>
             <if test="createTime != null and !&quot;&quot;.equals(createTime)">and create_time = #{createTime}</if>
             <if test="updateTime != null and !&quot;&quot;.equals(updateTime)">and update_time = #{updateTime}</if>
@@ -179,10 +188,17 @@
     </select>
 
     <!-- 根据用户id查询菜单 -->
-    <select id="findMenuListByUserId" parameterType="java.lang.Integer"
-            resultType="com.pine.admin.modules.system.entity.SysPermission">
+    <select id="findMenuListByUserId" parameterType="java.util.Map"
+            resultMap="perList">
 		SELECT
-		*
+         id,
+                     name,
+                     type,
+                     url,
+                     parentid,
+                     icon,
+                     available,
+                     #{userId} userId
 		FROM
 		sys_permission
 		WHERE TYPE = 'menu'
@@ -198,7 +214,7 @@
 		sys_role_id
 		FROM
 		sys_user_role
-		WHERE sys_user_id = #{userId}))
+		WHERE sys_user_id = #{userId})) and parentid = #{parentId}
 	</select>
 
     <!-- 根据用户id查询URL -->

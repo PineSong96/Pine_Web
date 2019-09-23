@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.pine.admin.modules.base.binder.BaseDao;
 import com.pine.admin.modules.system.entity.SysPermission;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author Pine
@@ -21,9 +22,8 @@ public interface SysPermissionDao extends BaseDao<SysPermission> {
     SysPermission querySysPermission(SysPermission record);
 
     //根据用户id查询菜单
-    List<SysPermission> findMenuListByUserId(Integer userId);
+    List<SysPermission> findMenuListByUserId(@Param("userId")Integer userId,@Param("parentId") Integer parentId);
 
     //根据用户id查询权限URL
     List<SysPermission> findPermissionListByUserId(Integer userId);
-
 }

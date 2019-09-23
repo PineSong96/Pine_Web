@@ -7,22 +7,15 @@ import com.pine.admin.modules.system.entity.SysUser;
 import com.pine.admin.modules.system.service.SysService;
 import com.pine.admin.modules.system.service.SysUserService;
 import com.pine.common.utils.Constant;
-import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.SimplePrincipalCollection;
-import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.util.ByteSource;
-import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -54,7 +47,7 @@ public class UserRealm extends AuthorizingRealm {
         Integer userId = ShiroUtils.getUserId();
         //系统管理员，拥有最高权限
         List<SysPermission> permissions = sysService.findPermissionListByUserId(userId);
-        List<String> permsList = permissions.stream().map(SysPermission::getPercode).collect(Collectors.toList());
+        List<String> permsList = permissions.stream().map(SysPermission::getPerCode).collect(Collectors.toList());
         //用户权限列表
         Set<String> permsSet = new HashSet<>();
         for (String perms : permsList) {
@@ -121,7 +114,8 @@ public class UserRealm extends AuthorizingRealm {
             /**
              * 设置权限
              */
-            shiroUserInfo.setPermission(sysService.findPermissionListByUserId(shiroUserInfo.getUserId()));
+            //暂时权限用不到
+//            shiroUserInfo.setPermission(sysService.findPermissionListByUserId(shiroUserInfo.getUserId()));
             shiroUserInfo.setMenus(sysService.findMenuListByUserId(shiroUserInfo.getUserId()));
 
             info = new SimpleAuthenticationInfo(shiroUserInfo, user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());

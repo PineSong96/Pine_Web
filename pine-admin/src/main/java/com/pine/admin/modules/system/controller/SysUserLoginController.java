@@ -25,7 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
-@Api(value = "A管理员登陆", tags = {"A管理员登陆" })
+@Api(value = "A管理员登陆", tags = {"A管理员登陆"})
 @RestController
 @Slf4j
 public class SysUserLoginController {
@@ -34,6 +34,7 @@ public class SysUserLoginController {
     private Producer producer;
     @Autowired
     private SysUserRoleService sysUserRoleService;
+
     @GetMapping("captcha.jpg")
     public void captcha(HttpServletResponse response) throws IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
@@ -46,35 +47,20 @@ public class SysUserLoginController {
         ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, text);
 
         ServletOutputStream out = response.getOutputStream();
+
         ImageIO.write(image, "jpg", out);
     }
 
     @PostMapping("login")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userCode", value = "用户名", example = "root", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "username", value = "用户名", example = "root", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "password", value = "密码", example = "1234", required = true, dataType = "string", paramType = "query")
-//            @ApiImplicitParam(name = "rand", value = "验证码", example = "a",required = true, dataType = "string", paramType = "query")
     })
-
-    public Result login(@RequestParam(required = true, value = "userCode") String userCode, @RequestParam(required = true, value = "password") String password, HttpServletResponse response
-    ) {
-
-//        if (!"a".equals(rand)){
-//            String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
-//
-//            if(!rand.equalsIgnoreCase(kaptcha)){
-//                return Result.error("验证码不正确");
-//            }
-//        }
-        String role = "0";
+    public Result login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password) {
         try {
             Subject subject = ShiroUtils.getSubject();
-            UsernamePasswordToken token = new UsernamePasswordToken(userCode, password);
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             subject.login(token);
-            SysUserRole sysUserRole = sysUserRoleService.selectByUser(ShiroUtils.getUserId());
-            if (sysUserRole != null){
-                role = "1";
-            }
         } catch (UnknownAccountException e) {
             return Result.error(e.getMessage());
         } catch (IncorrectCredentialsException e) {
@@ -84,13 +70,13 @@ public class SysUserLoginController {
         } catch (AuthenticationException e) {
             return Result.error("账户验证失败");
         }
-        return Result.success(true, role);
+        return Result.success(true, "登录成功");
     }
 
     /**
      * 退出
      */
-    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    @PostMapping(value = "logout")
     public Result logout() {
         String username = ShiroUtils.getShiroUserInfo().getUserName();
         ShiroUtils.logout();
@@ -100,8 +86,8 @@ public class SysUserLoginController {
     /**
      * error
      */
-    @RequestMapping(value = "error", method = RequestMethod.GET)
+    @GetMapping(value = "error")
     public Result error() {
-        return Result.error( "系统出错");
+        return Result.error("系统出错");
     }
 }

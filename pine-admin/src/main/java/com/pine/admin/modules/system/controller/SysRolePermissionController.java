@@ -102,7 +102,7 @@ public class SysRolePermissionController extends BaseController {
      * <p>删除。</p>
      */
     @RequestMapping(value = "/del", method = RequestMethod.POST)
-    public Result deleteSysRolePermission(@RequestParam(required = true, value = "id") String id) {
+    public Result deleteSysRolePermission(@RequestParam( value = "id") String id) {
 
         boolean num = sysRolePermissionService.deleteSysRolePermission(id);
         if (num) {
@@ -115,7 +115,7 @@ public class SysRolePermissionController extends BaseController {
      * <p>删除用户所有权限。</p>
      */
     @RequestMapping(value = "/delSysRole", method = RequestMethod.POST)
-    public Result delSysRole(@RequestParam(required = true, value = "sysRoleId") String sysRoleId) {
+    public Result delSysRole(@RequestParam( value = "sysRoleId") String sysRoleId) {
 
         boolean num = sysRolePermissionService.delSysRole(sysRoleId);
         if (num) {
@@ -129,7 +129,7 @@ public class SysRolePermissionController extends BaseController {
      */
     @RequestMapping(value = "/saveSysRolePermission", method = RequestMethod.POST)
     @ResponseBody
-    public Result saveSysRolePermission(@RequestParam(required = true, value = "roleId") String roleId, @RequestParam(required = true, value = "perIds") String perIds) {
+    public Result saveSysRolePermission(@RequestParam( value = "roleId") String roleId, @RequestParam( value = "perIds") String perIds) {
 
         boolean num = sysRolePermissionService.createSysRolePermission(roleId, perIds);
         if (num) {

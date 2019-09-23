@@ -2,10 +2,7 @@ package com.pine.admin.shiro;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.pine.admin.modules.system.entity.SysPermission;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,10 +12,7 @@ import java.util.List;
  * @Date: 2019/4/6
  * @Email:771190883@qq.com
  */
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ShiroUserInfo implements Serializable {
     /**
@@ -49,4 +43,23 @@ public class ShiroUserInfo implements Serializable {
      * 用户权限
      */
     List<SysPermission> permission;
+
+    public ShiroUserInfo() {
+    }
+
+    public ShiroUserInfo nullMenus(){
+        this.Menus =null;
+        this.permission = null;
+        return this;
+    }
+
+    public ShiroUserInfo(Integer userId, String userName, Integer userType, String userIcon, String openid, List<SysPermission> menus, List<SysPermission> permission) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userType = userType;
+        this.userIcon = userIcon;
+        this.openid = openid;
+        Menus = menus;
+        this.permission = permission;
+    }
 }

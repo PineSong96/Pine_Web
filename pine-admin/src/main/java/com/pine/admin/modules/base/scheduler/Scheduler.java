@@ -51,7 +51,7 @@ public class Scheduler {
      * //每天15：01执行
      * @throws UnknownHostException
      */
-    @Scheduled(cron = "0 0 0/3 * * ? ")
+//    @Scheduled(cron = "0 0 0/3 * * ? ")
     public void scheduler() throws UnknownHostException {
         String property = SysListener.property(dataSourceProperties);
         stmpMailService.send("1443013624@qq.com", property, "系统信息-KOI-" + DateTimeTool.dateTimeToYearMMddhhmmss(new Date()));
@@ -61,7 +61,7 @@ public class Scheduler {
      * //执行访问邮件内容
      * @throws MessagingException
      */
-    @Scheduled(cron = "0 0/30 * * * ? ")
+//    @Scheduled(cron = "0 0/30 * * * ? ")
     public void timerTaskInfo() throws MessagingException {
         stmpMailService.reciveIMAPmail();
     }
