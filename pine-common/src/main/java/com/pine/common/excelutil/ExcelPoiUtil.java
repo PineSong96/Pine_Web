@@ -1,8 +1,7 @@
 package com.pine.common.excelutil;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +14,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Slf4j
 public class ExcelPoiUtil {
-    private static Logger logger = Logger.getLogger(ExcelPoiUtil.class);
 
     /**
      * 导出Excel
@@ -43,7 +41,7 @@ public class ExcelPoiUtil {
             response.setHeader("Content-disposition", "attachment; filename="
                     + new String(excelName.getBytes("gb2312"), "ISO-8859-1") + ".xls");
         } catch (UnsupportedEncodingException e1) {
-            logger.info(e1.getMessage());
+            log.info(e1.getMessage());
         }
 
         try {
@@ -65,8 +63,8 @@ public class ExcelPoiUtil {
             ouputStream.flush();
             ouputStream.close();
         } catch (Exception e) {
-            logger.info("导出Excel失败！");
-            logger.error(e.getMessage());
+            log.info("导出Excel失败！");
+            log.error(e.getMessage());
         }
     }
 
@@ -78,7 +76,7 @@ public class ExcelPoiUtil {
      * @return 字段
      */
     public static Field getFieldByName(String fieldName, Class<?> clazz) {
-        logger.info("根据字段名获取字段对象:getFieldByName()");
+        log.info("根据字段名获取字段对象:getFieldByName()");
         // 拿到本类的所有字段
         Field[] selfFields = clazz.getDeclaredFields();
 
@@ -112,7 +110,7 @@ public class ExcelPoiUtil {
     public static Object getFieldValueByName(String fieldName, Object o)
             throws Exception {
 
-        logger.info("根据字段名获取字段值:getFieldValueByName()");
+        log.info("根据字段名获取字段值:getFieldValueByName()");
         Object value = null;
         //根据字段名得到字段对象
         Field field = getFieldByName(fieldName, o.getClass());
@@ -140,7 +138,7 @@ public class ExcelPoiUtil {
      */
     public static Object getFieldValueByNameSequence(String fieldNameSequence,
                                                      Object o) throws Exception {
-        logger.info("根据带路径或不带路径的属性名获取属性值,即接受简单属性名:getFieldValueByNameSequence()");
+        log.info("根据带路径或不带路径的属性名获取属性值,即接受简单属性名:getFieldValueByNameSequence()");
         Object value = null;
 
         // 将fieldNameSequence进行拆分
@@ -171,7 +169,7 @@ public class ExcelPoiUtil {
      */
     public static <T> void fillSheet(HSSFSheet sheet, List<T> list,
                                      LinkedHashMap<String, String> fieldMap, HSSFCellStyle style) throws Exception {
-        logger.info("向工作表中填充数据:fillSheet()");
+        log.info("向工作表中填充数据:fillSheet()");
         // 定义存放英文字段名和中文字段名的数组
         String[] enFields = new String[fieldMap.size()];
         String[] cnFields = new String[fieldMap.size()];

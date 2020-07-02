@@ -17,7 +17,7 @@ import java.util.Date;
 
 import javax.imageio.stream.FileImageInputStream;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import com.aliyun.oss.OSSClient;
@@ -25,8 +25,6 @@ import com.aliyun.oss.model.Bucket;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
-
-import sun.misc.BASE64Decoder;
 
 /**
  *
@@ -37,9 +35,8 @@ import sun.misc.BASE64Decoder;
  *
  */
 @Component
+@Slf4j
 public class AliyunOSSClientUtil {
-    // log日志
-    private static Logger logger = Logger.getLogger(AliyunOSSClientUtil.class);
     // 阿里云API的内或外网域名
     private static String ENDPOINT;
     // 阿里云API的密钥Access Key ID
@@ -90,7 +87,7 @@ public class AliyunOSSClientUtil {
         if (!ossClient.doesBucketExist(bucketName)) {
             // 创建存储空间
             Bucket bucket = ossClient.createBucket(bucketName);
-            logger.info("创建存储空间成功");
+            log.info("创建存储空间成功");
             return bucket.getName();
         }
         return bucketNames;
@@ -106,7 +103,7 @@ public class AliyunOSSClientUtil {
      */
     public static void deleteBucket(OSSClient ossClient, String bucketName) {
         ossClient.deleteBucket(bucketName);
-        logger.info("删除" + bucketName + "Bucket成功");
+        log.info("删除" + bucketName + "Bucket成功");
     }
 
     /**
@@ -127,7 +124,7 @@ public class AliyunOSSClientUtil {
         if (!ossClient.doesObjectExist(bucketName, keySuffixWithSlash)) {
             // 创建文件夹
             ossClient.putObject(bucketName, keySuffixWithSlash, new ByteArrayInputStream(new byte[0]));
-            logger.info("创建文件夹成功");
+            log.info("创建文件夹成功");
             // 得到文件夹名
             OSSObject object = ossClient.getObject(bucketName, keySuffixWithSlash);
             String fileDir = object.getKey();
@@ -150,7 +147,7 @@ public class AliyunOSSClientUtil {
      */
     public static void deleteFile(OSSClient ossClient, String bucketName, String folder, String key) {
         ossClient.deleteObject(bucketName, folder + key);
-        logger.info("删除" + bucketName + "下的文件" + folder + key + "成功");
+        log.info("删除" + bucketName + "下的文件" + folder + key + "成功");
     }
 
     /**
@@ -178,7 +175,7 @@ public class AliyunOSSClientUtil {
             String timefile = FORMATS;
             String fileName = file.getName();
             fileName = timefile + fileName.substring(fileName.lastIndexOf("."));
-            logger.info("上传到路径" + folder + fileName);
+            log.info("上传到路径" + folder + fileName);
             // 文件大小
             Long fileSize = file.length();
             // 创建上传Object的Metadata
@@ -206,7 +203,7 @@ public class AliyunOSSClientUtil {
             ossClient.shutdown();
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("上传阿里云OSS服务器异常." + e.getMessage(), e);
+            log.error("上传阿里云OSS服务器异常." + e.getMessage(), e);
         }
         return fo;
     }
@@ -224,7 +221,7 @@ public class AliyunOSSClientUtil {
             String timefile = FORMATS;
 //            String fileName = file.getName();
             file = timefile + file.substring(file.lastIndexOf("."));
-            logger.info("上传到路径" + folder + file);
+            log.info("上传到路径" + folder + file);
             // 文件大小
             Integer fileSize = file.length();
             // 创建上传Object的Metadata
@@ -252,7 +249,7 @@ public class AliyunOSSClientUtil {
             ossClient.shutdown();
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("上传阿里云OSS服务器异常." + e.getMessage(), e);
+            log.error("上传阿里云OSS服务器异常." + e.getMessage(), e);
         }
         return fo;
     }
@@ -268,7 +265,7 @@ public class AliyunOSSClientUtil {
         String timefile = FORMATS;// 文件名
         String fileName = ".MP4";// 后缀扩展名
         fileName = timefile + fileName;
-        logger.info("上传到路径" + folder + fileName);
+        log.info("上传到路径" + folder + fileName);
 
         Long fileSize = (long) b.length;
 
@@ -305,7 +302,7 @@ public class AliyunOSSClientUtil {
         String timefile = FORMATS;// 文件名
         String fileName = ".jpg";// 后缀扩展名
         fileName = timefile + fileName;
-        logger.info("上传到路径" + folder + fileName);
+        log.info("上传到路径" + folder + fileName);
 
         Long fileSize = (long) b.length;
 //        String timefile = FORMATS;
@@ -436,10 +433,10 @@ public class AliyunOSSClientUtil {
             // System.out.println("filename:"+filename);
             File filess = new File(filename);
             String[] s = AliyunOSSClientUtil.uploadObject2OSS(ossClient, filess, BACKET_NAME, user_id);
-            logger.info("上传后的文件MD5数字唯一签名:" + s[0]);
-            logger.info("文件路径:" + s[1]);
+            log.info("上传后的文件MD5数字唯一签名:" + s[0]);
+            log.info("文件路径:" + s[1]);
             url = AliyunOSSClientUtil.getUrl(ossClient, BACKET_NAME, s[1]);
-            logger.info("访问网址路径:" + url);
+            log.info("访问网址路径:" + url);
         }
         // 上传后的文件MD5数字唯一签名:40F4131427068E08451D37F02021473A
         return url;

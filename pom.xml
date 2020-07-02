@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.10.RELEASE</version>
+        <version>2.3.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -42,36 +42,17 @@
     <dependencyManagement>
 
         <dependencies>
-
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-client</artifactId>
-                <version>1.5.4</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.json</groupId>
                 <artifactId>json</artifactId>
                 <version>20180130</version>
             </dependency>
 
-            <dependency>
-                <groupId>postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>9.1-901-1.jdbc4</version>
-            </dependency>
-
-
-            <dependency>
-                <groupId>com.aliyun.oss</groupId>
-                <artifactId>aliyun-sdk-oss</artifactId>
-                <version>${com.aliyun.oss.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-parent</artifactId>
-                <version>1.5.10.RELEASE</version>
+                <version>2.3.1.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -92,20 +73,24 @@
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>1.1.1</version><!-- 版本号必须需要 -->
+                <version>2.0.0</version>
             </dependency>
+
 
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.38</version>
+                <version>8.0.20</version>
             </dependency>
+
+
 
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
+                <version>1.1.9</version>
             </dependency>
+
 
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -162,12 +147,6 @@
                 <version>2.6.2</version>
             </dependency>
 
-            <dependency>
-                <groupId>postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>9.1-901-1.jdbc4</version>
-            </dependency>
-
             <!-- POIExcel-->
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -205,7 +184,48 @@
                 <artifactId>joda-time</artifactId>
                 <version>2.9.9</version>
             </dependency>
-
+            <!-- 短息服务 -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>4.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+                <version>2.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>25.1-jre</version>
+            </dependency>
+            <!--jackson  -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.11.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.11.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.11.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>1.9.13</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-core</artifactId>
+                <version>1.18.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
