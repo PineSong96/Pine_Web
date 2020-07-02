@@ -1,6 +1,6 @@
 package com.pine.admin.shiro;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.pine.admin.modules.system.entity.SysPermission;
 import lombok.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @Email:771190883@qq.com
  */
 @Data
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ShiroUserInfo implements Serializable {
     /**
      * 用户ID

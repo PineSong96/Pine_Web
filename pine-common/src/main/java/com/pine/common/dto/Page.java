@@ -3,13 +3,13 @@ package com.pine.common.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * 分页对应的实体类
  */
 @JsonAutoDetect
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @ApiModel(value = "分页对象", description = "分页对象")
 public class Page {
 

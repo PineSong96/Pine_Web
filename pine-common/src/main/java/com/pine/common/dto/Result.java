@@ -1,7 +1,7 @@
 package com.pine.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.pine.common.utils.DateTimeTool;
 
 import java.util.Date;
@@ -15,7 +15,7 @@ import java.util.Date;
  * @version 1.0
  */
 @JsonAutoDetect
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Result {
 
     private boolean success;

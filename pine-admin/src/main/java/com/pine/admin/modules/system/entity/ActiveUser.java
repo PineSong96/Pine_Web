@@ -1,7 +1,7 @@
 package com.pine.admin.modules.system.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * zhangsong@crmhby.com
  * @date 2018/3/27 10:40
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
 public class ActiveUser implements Serializable {
     private static final long serialVersionUID = 1L;

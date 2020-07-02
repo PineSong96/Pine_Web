@@ -1,7 +1,7 @@
 package com.pine.admin.modules.business.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,7 +18,7 @@ import java.util.Date;
  * @date 2019-03-31 21:13:10
  */
 @Data
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @ApiModel(value = "用户信息对象", description = "用户信息对象")
 public class UserInfo implements Serializable {
     private static final long serialVersionUID = 1L;

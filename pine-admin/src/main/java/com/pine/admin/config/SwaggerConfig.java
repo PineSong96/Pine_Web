@@ -7,6 +7,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -25,7 +26,9 @@ public class SwaggerConfig {
 
     // 创建api的基本信息
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("集成Swagger2构建RESTful APIs").description("高性能在线测试接口文档自动生成开发平台").termsOfServiceUrl("https://www.crmhby.com").contact(" Pine Sir")
+        Contact contact = new Contact("Pine", "https://pine.show", "771190883@qq.com");
+
+        return new ApiInfoBuilder().title("集成Swagger2构建RESTful APIs").description("高性能在线测试接口文档自动生成开发平台").termsOfServiceUrl("https://www.crmhby.com").contact(contact)
                 .version("1.0.0")
                 .build();
     }
@@ -36,7 +39,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.pine.admin"))//这是注意的代码
-                .paths(swaggerShow==true?PathSelectors.any():PathSelectors.none())
+                .paths(swaggerShow == true ? PathSelectors.any() : PathSelectors.none())
                 .build();
     }
 
