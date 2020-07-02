@@ -1,10 +1,10 @@
 # Pine_Best_Admin
 
 #### 项目介绍
-SpringBoot 1.5.10.RELEASE 
+SpringBoot 快速开发平台
 
 #### 软件架构
-软件环境：SpringBoot 1.5.1 +JDK1.8 + MySQL 5.6 
+软件环境：SpringBoot 2.3.1 +JDK1.8 + MySQL 5.6 
 部署环境：Windows 、Linux 、macOS
 角色 ： 主要开发
 系统介绍 ： 采用SpringBoot、MyBatis开发的一套快速开发平台
