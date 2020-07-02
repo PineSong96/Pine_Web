@@ -1,5 +1,6 @@
 package com.pine.admin.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -19,6 +20,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+    @Value("${swagger.show}")
+    private boolean swaggerShow;
+
     // 创建api的基本信息
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("集成Swagger2构建RESTful APIs").description("高性能在线测试接口文档自动生成开发平台").termsOfServiceUrl("https://www.crmhby.com").contact(" Pine Sir")
@@ -32,7 +36,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.pine.admin"))//这是注意的代码
-                .paths(PathSelectors.any())
+                .paths(swaggerShow==true?PathSelectors.any():PathSelectors.none())
                 .build();
     }
 
