@@ -303,7 +303,7 @@
     </dependencies>
     <build>
 
-        <finalName>koi</finalName>
+        <finalName>pine</finalName>
         <!--mvn clean package -Dmaven.test.skip=true-->
         <plugins>
 
