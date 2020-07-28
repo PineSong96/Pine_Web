@@ -18,10 +18,10 @@ import java.util.Properties;
 
 /**
  * 生成验证码配置
- *
+ * 没用到验证码
  * @author Mark sunlightcs@gmail.com
  */
-@Configuration
+//@Configuration
 public class KaptchaConfig {
 
     @Bean

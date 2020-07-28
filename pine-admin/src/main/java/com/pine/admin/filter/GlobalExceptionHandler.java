@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * 异常捕获 需要自定义一些异常然后解析
  * @Author: Pine
  * @Date: 2018/6/29 下午12:19
  * @Email:771190883@qq.com
@@ -20,18 +21,18 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(value = {UnauthorizedException.class, AuthorizationException.class})
-    public Result defaultUnauthorizedException(){
+    public Result defaultUnauthorizedException() {
         return Result.error("拒绝访问");
     }
 
     @ExceptionHandler(value = Exception.class)
-    public Result defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+    public Result defaultErrorHandler(Exception e) throws Exception {
 
-        return Result.error( e.getMessage());
+        return Result.error(e.getMessage());
     }
 
     @ExceptionHandler(value = ApiException.class)
-    public Result defaultApiErrorHandler(HttpServletRequest req, ApiException e) {
+    public Result defaultApiErrorHandler(ApiException e) {
         return Result.error(e.getCode(), e.getMessage());
     }
 }

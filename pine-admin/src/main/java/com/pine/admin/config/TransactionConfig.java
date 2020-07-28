@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.TransactionManagementConfigure
 
 import javax.sql.DataSource;
 
+/**
+ * spring事务开启配置数据源
+ */
 @Configuration
 @ComponentScan
 public class TransactionConfig implements TransactionManagementConfigurer {

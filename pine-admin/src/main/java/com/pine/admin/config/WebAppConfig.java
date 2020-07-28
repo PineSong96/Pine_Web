@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
+ * 放开某些静态资源例如swagger等
  * @Author: Pine
  * @Date: 2018/5/28 下午7:03
  * @Email:771190883@qq.com

@@ -5,6 +5,7 @@ import com.pine.admin.modules.base.service.impl.ExcelPoiServiceImpl;
 import com.pine.common.dto.Result;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @RestController
-@RequestMapping("/excelPort")
+@RequestMapping("/test")
 @Api(value = "EXCEL导出", tags = {"EXCEL导出" })
 public class ExcelExpeortController {
 
@@ -29,13 +30,11 @@ public class ExcelExpeortController {
      * 导出
      */
     @ResponseBody
-    @GetMapping(value = "/exportCode")
+    @GetMapping(value = "/a")
     public Result exportCode(HttpServletRequest request, HttpServletResponse response, Integer productId) {
-
-        excelPoiService.exampleExport(request, response, productId);
-
-        return Result.success(true, "导出Excel成功");
-
+        String url = null;
+        Assert.notNull(url, "URI is required");
+        return Result.error("url");
     }
 
 //    @RequestMapping(value = "/hello", method = RequestMethod.GET)

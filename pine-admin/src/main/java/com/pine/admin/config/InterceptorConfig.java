@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author: Pine
+ * @Author: Pine 留着自己拓展用的时候注释打开
  * @Date: 2018/5/28 下午7:07
  * @Email:771190883@qq.com
  */
 @Slf4j
-@Component
-@Configuration
+//@Component
+//@Configuration
 public class InterceptorConfig implements HandlerInterceptor {
 
     public static Boolean handler = true;

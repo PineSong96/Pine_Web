@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 /**
+ * 数据源配置
  * @Author: Pine
  * @Date: 2018/5/24 下午4:20
  * @Email:771190883@qq.com

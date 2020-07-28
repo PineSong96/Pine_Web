@@ -3,6 +3,7 @@ package com.pine.admin.config;
 import com.pine.common.wxpay.IWXPayDomain;
 import com.pine.common.wxpay.WXPayConfig;
 import com.pine.common.wxpay.WXPayConstants;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
@@ -11,13 +12,13 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
+ * 微信公众号配置文件
  * @Author: Pine
  * @Date: 2019/4/2
  * @Email:771190883@qq.com
  */
 @Component
-@Getter
-@Setter
+@Data
 public class WeChatConfig extends WXPayConfig {
 
     private byte[] certData;

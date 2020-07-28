@@ -12,11 +12,12 @@ import org.springframework.core.io.ResourceLoader;
 import java.io.*;
 
 /**
+ * 主要用来检测系统信息
  * @Author: Pine
  * @Date: 2019/4/6
  * @Email:771190883@qq.com
  */
-@Configuration
+//@Configuration
 @Slf4j
 public class SigarConfig {
     //静态代码块

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 跨域设置
  * @Author: Pine
  * @Date: 2019/4/4
  * @Email:771190883@qq.com
@@ -18,11 +19,11 @@ import java.io.IOException;
 @Slf4j
 public class CorsFilter implements Filter {
 
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
+//
+//    @Override
+//    public void init(FilterConfig filterConfig) throws ServletException {
+//
+//    }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -38,7 +39,7 @@ public class CorsFilter implements Filter {
         chain.doFilter(req, res);
     }
 
-    @Override
-    public void destroy() {
-    }
+//    @Override
+//    public void destroy() {
+//    }
 }

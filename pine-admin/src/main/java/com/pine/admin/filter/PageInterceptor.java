@@ -19,12 +19,10 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * <p>分页拦截器 </p>
- *
- * @author pine <br />
- * 更新履历 <br />
- * 日期 : 姓名: 更新内容<br />
- * @version 1.0
+ * 分页拦截器
+ * @Author: Pine
+ * @Date: 2019/4/4
+ * @Email:771190883@qq.com
  */
 @Component
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})

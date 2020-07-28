@@ -65,6 +65,7 @@ public class ShiroConfig {
         filterMap.put("/assets/**", "anon");
         filterMap.put("/favicon.ico", "anon");
         filterMap.put("/captcha.jpg", "anon");
+        filterMap.put("/test/**", "anon");
         filterMap.put("/**", "authc");
         LinkedHashMap<String, Filter> filtsMap = new LinkedHashMap<String, Filter>();
         filtsMap.put("authc", new ShiroFormAuthenticationFilter());
