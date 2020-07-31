@@ -3,12 +3,10 @@ package com.pine.admin.modules.system.controller;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import com.pine.admin.modules.system.entity.SysPermission;
-import com.pine.admin.modules.system.entity.SysUserRole;
+
 import com.pine.admin.modules.system.service.SysUserRoleService;
 import com.pine.admin.shiro.ShiroUtils;
 import com.pine.common.dto.Result;
-import com.pine.common.utils.CookieUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -23,7 +21,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.List;
 
 @Api(value = "A管理员登陆", tags = {"A管理员登陆"})
 @RestController

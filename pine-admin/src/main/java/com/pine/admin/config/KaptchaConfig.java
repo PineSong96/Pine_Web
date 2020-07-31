@@ -21,7 +21,7 @@ import java.util.Properties;
  * 没用到验证码
  * @author Mark sunlightcs@gmail.com
  */
-//@Configuration
+@Configuration
 public class KaptchaConfig {
 
     @Bean

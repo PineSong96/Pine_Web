@@ -5,6 +5,7 @@ import com.pine.common.exception.ApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +18,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestControllerAdvice
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class GlobalExceptionHandler {
-
 
     @ExceptionHandler(value = {UnauthorizedException.class, AuthorizationException.class})
     public Result defaultUnauthorizedException() {

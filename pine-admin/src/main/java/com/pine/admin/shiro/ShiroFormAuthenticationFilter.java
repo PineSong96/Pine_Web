@@ -66,6 +66,7 @@ public class ShiroFormAuthenticationFilter extends FormAuthenticationFilter {
                 resp.setHeader("Access-Control-Allow-Credentials", "true");
                 resp.setContentType("application/json; charset=utf-8");
                 resp.setCharacterEncoding("UTF-8");
+                resp.setStatus(HttpStatus.BAD_REQUEST.value());
                 PrintWriter out = resp.getWriter();
                 JSONObject result = new JSONObject();
                 result.put("success", false);
