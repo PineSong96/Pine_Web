@@ -27,7 +27,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public Result defaultErrorHandler(Exception e) throws Exception {
-
         return Result.error(e.getMessage());
     }
 
@@ -35,4 +34,6 @@ public class GlobalExceptionHandler {
     public Result defaultApiErrorHandler(ApiException e) {
         return Result.error(e.getCode(), e.getMessage());
     }
+
+
 }
