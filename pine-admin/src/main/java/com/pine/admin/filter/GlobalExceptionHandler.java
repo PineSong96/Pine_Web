@@ -6,12 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * 异常捕获 需要自定义一些异常然后解析
+ *
  * @Author: Pine
  * @Date: 2018/6/29 下午12:19
  * @Email:771190883@qq.com
@@ -23,7 +25,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {UnauthorizedException.class, AuthorizationException.class})
     public Result defaultUnauthorizedException() {
-        return Result.error("拒绝访问");
+        return Result.error("拒绝访问" );
     }
 
     @ExceptionHandler(value = Exception.class)
@@ -34,6 +36,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ApiException.class)
     public Result defaultApiErrorHandler(ApiException e) {
         return Result.error(e.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public Result defaultMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        return Result.error("校验错误:" + e.getBindingResult().getFieldError().getDefaultMessage());
     }
 
 
