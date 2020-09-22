@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.pine.common.dto.Result;
 import com.pine.common.exception.ApiException;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -43,7 +44,7 @@ public class KuaiDi {
         String resp;
 //        JSONObject.parseJ
         try {
-            resp = PostUtil.httpPost("https://poll.kuaidi100.com/poll/query.do", params);
+            resp = HttpRequest.sendPost("https://poll.kuaidi100.com/poll/query.do", params);
             System.out.println(JSON.parse(resp));
             return resp;
         } catch (Exception e) {
@@ -65,7 +66,7 @@ public class KuaiDi {
         p.put("schema", "json");
         p.put("param", JSON.toJSONString(req));
         try {
-            String ret = PostUtil.httpPost("https://poll.kuaidi100.com/poll", p);
+            String ret = HttpRequest.sendPost("https://poll.kuaidi100.com/poll", p);
 //            Object parse = JSON.parse(ret);
 //            System.out.println(ret);
             TaskResponse resp = JSON.parseObject(ret, TaskResponse.class);
@@ -87,8 +88,7 @@ public class KuaiDi {
 
 }
 
-@Getter
-@Setter
+@Data
 class TaskRequest {
     private String company;
     private String from;
@@ -99,8 +99,7 @@ class TaskRequest {
 
 }
 
-@Getter
-@Setter
+@Data
 class TaskResponse {
     private String result;
     private String returnCode;

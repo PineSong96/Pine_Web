@@ -1,6 +1,7 @@
 package com.pine.common.wxpay;
 
-import org.apache.http.client.HttpClient;
+
+import sun.net.www.http.HttpClient;
 
 /**
  * 常量

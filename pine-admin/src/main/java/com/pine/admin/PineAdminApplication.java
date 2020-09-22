@@ -7,9 +7,10 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+/**
+ * @author Administrator
+ */
 @EnableScheduling   //开启定时器
 @SpringBootApplication
 @ServletComponentScan

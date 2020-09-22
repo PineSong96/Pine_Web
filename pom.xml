@@ -110,11 +110,6 @@
                 <version>3.17</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.aliyun.oss</groupId>
-                <artifactId>aliyun-sdk-oss-private</artifactId>
-                <version>2.3.1</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>

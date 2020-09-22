@@ -1,18 +1,18 @@
 package com.pine.admin.modules.base.service.impl;
 
+
+import com.alibaba.fastjson.JSONObject;
 import com.pine.admin.config.WeChatConfig;
 import com.pine.admin.modules.base.service.WeiXinService;
 import com.pine.admin.modules.business.dao.UserInfoDao;
 import com.pine.admin.modules.business.entity.UserInfo;
 import com.pine.admin.shiro.WxOpenIdToken;
-import com.pine.common.utils.Constant;
-import com.pine.common.utils.HttpGetRequestUtil;
+import com.pine.common.utils.HttpRequest;
 import com.pine.common.wxpay.WXPay;
 import com.pine.common.wxpay.WXPayUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +41,8 @@ public class WeiXinServiceImpl implements WeiXinService {
             // System.out.println("code : " + code);
             String url = WeChatConfig.OPENID_URL + "appid=" + WeChatConfig.APP_ID + "&secret=" + WeChatConfig.APP_SECRET + "&code=" + code
                     + "&grant_type=authorization_code";
-            JSONObject data = HttpGetRequestUtil.loadJSON(url);
+
+            JSONObject data =JSONObject.parseObject(HttpRequest.sendPost(url, (String) null));
             // System.out.println("data : " + data);
 
             //System.out.println(json.toString());
@@ -52,11 +53,10 @@ public class WeiXinServiceImpl implements WeiXinService {
 
             url = WeChatConfig.USER_INFO_URL +"access_token=" + accessToken + "&openid=" + openId + "&lang=zh_CN";
 
-            data = HttpGetRequestUtil.loadJSON(url);
-            //获得用户信息
+            data =JSONObject.parseObject(HttpRequest.sendPost(url, (String) null));
 
             String userName = (String) data.get("nickname");
-//            userName = userName.replaceAll("[^\\\\uD000-\\\\uFFFF]", "");
+
             String headimgurl = (String) data.get("headimgurl");
             //查询微信用户
             UserInfo userInfo = new UserInfo();

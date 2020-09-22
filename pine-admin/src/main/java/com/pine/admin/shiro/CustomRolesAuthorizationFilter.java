@@ -1,11 +1,10 @@
 package com.pine.admin.shiro;
 
 import com.alibaba.fastjson.JSONObject;
-import com.aliyun.oss.HttpMethod;
 import com.pine.common.dto.Result;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
-
+import org.springframework.http.HttpMethod;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
