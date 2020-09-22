@@ -4,6 +4,7 @@ import com.pine.common.wxpay.IWXPayDomain;
 import com.pine.common.wxpay.WXPayConfig;
 import com.pine.common.wxpay.WXPayConstants;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import java.io.InputStream;
  */
 @Component
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class WeChatConfig extends WXPayConfig {
 
     private byte[] certData;
